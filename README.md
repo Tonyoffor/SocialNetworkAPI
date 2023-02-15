@@ -61,9 +61,7 @@ In this project I tested my code in the terminal to see if there was an error in
 ## Questions
 If you have any further questions you can contact me on:<br />
   -GitHub: [Tonyoffor](https://github.com/Tonyoffor)<br />
-  -GitHub: [AhmedOmer]()<br>
-  -GitHub: [GregGriffith]()
+ 
 <br />
   -Email: tonyc.offor@gmail.com<br /><br />
-  -Email: <br /><br />
-  -Email: <br /><br />
+  
