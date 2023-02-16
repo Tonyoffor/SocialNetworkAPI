@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/new-user/:user', (req, res) => {
-    const newUser = new User({ name: req.params.genre });
+    const newUser = new User({ name: req.params.user });
     newUser.save();
     if (newUser) {
       res.status(200).json(newUser);
