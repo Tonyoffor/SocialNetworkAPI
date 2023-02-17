@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./config/connection');
 // Require model
-const { User } = require('./models');
+const { User } = require('./model');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post('/new-user/:user', (req, res) => {
+app.post('/:userId', (req, res) => {
     const newUser = new User({ name: req.params.user });
     newUser.save();
     if (newUser) {
