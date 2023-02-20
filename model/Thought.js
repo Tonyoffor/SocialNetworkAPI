@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 const { init } = require('./User');
+const { ObjectId } = require('mongodb');
 
 const thoughtSchema = new Schema({
 toughtText: { 
@@ -26,6 +28,7 @@ reactions: {
 
 const reactionSchema = new Schema({
 reactionId:{
+    type: Schema.Types.ObjectId,
     default: new ObjectId,
     // Use Mongoose's ObjectId data type
     // Default value is set to a new ObjectId
@@ -47,8 +50,43 @@ createdAt: {
 
 
 
+//I am meant to do something here, not sure what
+
+thoughtSchema.virtual('createdAtFormatted').get(function() {
+    return this.createdAt.toLocaleString();
+  });
+  
+  const thought = mongoose.model('thought', thoughtSchema);
+  
+  // Query for thought and include the formatted timestamp
+  thought.find({})
+    .select('body createdAt createdAtFormatted')
+    .exec(function(err, thought) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(thought);
+    });
 
 
+    // Define a virtual property for the reaction count
+thoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+  });
+  
+  
+  // Query for thoughts and include the reaction count
+  thought.find({})
+    .select('thoughtText username reactions reactionCount')
+    .exec(function(err, thoughts) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(thoughts);
+    });
+  
 
 const Thought = model('thought', thoughtSchema);
 
