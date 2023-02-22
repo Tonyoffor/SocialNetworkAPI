@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const mongoose = require('mongoose');
-// const { init } = require('./User');
 const { ObjectId } = require('mongodb');
 
 const thoughtSchema = new Schema({

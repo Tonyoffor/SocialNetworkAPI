@@ -40,7 +40,7 @@ app.post('/:userId', (req, res) => {
 
 // Finds first document that matches and deletes
 app.delete('/find-one-delete/:user', (req, res) => {
-  Genre.findOneAndDelete({ name: req.params.user }, (err, result) => {
+  User.findOneAndDelete({ name: req.params.user }, (err, result) => {
     if (result) {
       res.status(200).json(result);
       console.log(`Deleted: ${result}`);
@@ -53,7 +53,7 @@ app.delete('/find-one-delete/:user', (req, res) => {
 
 // find documents that matches and delete
 app.post('/find-one-update/:user', (req, res) => {
-  Genre.findOneAndUpdate({name:'username'}, {name: req.params.user} ),(err,result)=>{
+  User.findOneAndUpdate({name:'username'}, {name: req.params.user} ),(err,result)=>{
     if(result){
       res.status(200).json(result);
       console.log(`Update: ${result}`);
