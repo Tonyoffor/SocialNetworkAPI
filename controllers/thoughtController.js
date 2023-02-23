@@ -1,4 +1,4 @@
-const Thought = require('../model/Thought');
+const {Thought} = require('../model');
 
 module.exports = {
   getThought(req, res) {
@@ -24,40 +24,6 @@ module.exports = {
   },
 };
 
-app.post('/:thoughtId', (req, res) => {
-    const newThought = new Thought({ name: req.params.thought });
-    newThought.save();
-    if (newThought) {
-      res.status(200).json(newThought);
-    } else {
-      console.log('Uh Oh, something went wrong');
-      res.status(500).json({ message: 'something went wrong' });
-    }
-  });
-  
-  
-  
-  // Finds first document that matches and deletes
-  app.delete('/find-one-delete/:thought', (req, res) => {
-    Thought.findOneAndDelete({ name: req.params.thought }, (err, result) => {
-      if (result) {
-        res.status(200).json(result);
-        console.log(`Deleted: ${result}`);
-      } else {
-        console.log('Uh Oh, something went wrong');
-        res.status(500).json({ message: 'something went wrong' });
-      }
-    });
-  });
-  
-  // find documents that matches and delete
-  app.post('/find-one-update/:user', (req, res) => {
-    Thought.findOneAndUpdate({name:'username'}, {name: req.params.thought} ),(err,result)=>{
-      if(result){
-        res.status(200).json(result);
-        console.log(`Update: ${result}`);
-      }
-    }
-  });
+
   
   

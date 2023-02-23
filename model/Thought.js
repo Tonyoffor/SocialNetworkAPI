@@ -1,91 +1,67 @@
-const { Schema, model } = require('mongoose');
-const mongoose = require('mongoose');
-const { ObjectId } = require('mongodb');
-
-const thoughtSchema = new Schema({
-toughtText: { 
-    type: String,
-    required: true,
-    minlength: 1,
-    maxlength: 200,
-},
-createdAt:{
-    type: Date,
-    default: Date.now(),
-},
-username:{
-    type: String,
-    required: true,
-},
-reactions: {
-    type: Schema.Types.ObjectId,
-    ref: 'reactionSchema'
-    //find object notes 
-// Array of nested documents created with the reactionSchema
-}
-})
+const { Schema, model, Types } = require('mongoose');
 
 const reactionSchema = new Schema({
-reactionId:{
-    type: Schema.Types.ObjectId,
-    default: new ObjectId,
-    // Use Mongoose's ObjectId data type
-    // Default value is set to a new ObjectId
-},
-reactionBody:{
-    type: String,
-    required: true,
-    maxlength: 280,
-},
-username:{
-    type: String,
-    required: true,
-},
-createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+    reactionId: {
+        type: Schema.Types.ObjectId,
+        default: ()=> new Types.ObjectId(),
+        // Use Mongoose's ObjectId data type
+        // Default value is set to a new ObjectId
+    },
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
+
+const thoughtSchema = new Schema({
+    thoughtText: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 200,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    reactions: [reactionSchema]
+})
+
+
 
 
 
 //I am meant to do something here, not sure what
 
-thoughtSchema.virtual('createdAtFormatted').get(function() {
+thoughtSchema.virtual('createdAtFormatted').get(function () {
     return this.createdAt.toLocaleString();
-  });
-  
-  const thought = mongoose.model('thought', thoughtSchema);
-  
-  // Query for thought and include the formatted timestamp
-  thought.find({})
-    .select('body createdAt createdAtFormatted')
-    .exec(function(err, thought) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(thought);
-    });
+});
 
 
-    // Define a virtual property for the reaction count
-thoughtSchema.virtual('reactionCount').get(function() {
+
+
+
+// Define a virtual property for the reaction count
+thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
-  });
-  
-  
-  // Query for thoughts and include the reaction count
-  thought.find({})
-    .select('thoughtText username reactions reactionCount')
-    .exec(function(err, thoughts) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(thoughts);
-    });
-  
+});
+
+
+
+
 
 const Thought = model('thought', thoughtSchema);
 

@@ -1,12 +1,14 @@
-const User = require('../model/User');
+const {User} = require('../model');
 
 module.exports = {
+  //tested
   getUsers(req, res) {
     User.find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
 //Tells the system to look for a single users information and retrieve it for the user
+//tested
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v')
@@ -18,46 +20,37 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // create a new user
+  //tested
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
+  deleteUser(req, res) {
+    User.findOneAndDelete({_id:req.params.userId})
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  },
+  //tested
+  updateUser(req, res){
+    User.findOneAndUpdate({_id:req.params.userId},{$set:req.body},{runValidators:true,new:true})
+    .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  },
+  addFriend(req, res){
+    User.findOneAndUpdate({_id:req.params.userId},{$addToSet:{friends:req.params.friendId}},{runValidators:true,new:true})
+    .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteFriend(req, res){
+    User.findOneAndUpdate({_id:req.params.userId},{$pull:{friends:req.params.friendId}},{new:true})
+    .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  }
 };
 
-app.post('/:userId', (req, res) => {
-  const newUser = new User({ name: req.params.user });
-  newUser.save();
-  if (newUser) {
-    res.status(200).json(newUser);
-  } else {
-    console.log('Uh Oh, something went wrong');
-    res.status(500).json({ message: 'something went wrong' });
-  }
-});
 
 
 
-// Finds first document that matches and deletes
-app.delete('/find-one-delete/:user', (req, res) => {
-  User.findOneAndDelete({ name: req.params.user }, (err, result) => {
-    if (result) {
-      res.status(200).json(result);
-      console.log(`Deleted: ${result}`);
-    } else {
-      console.log('Uh Oh, something went wrong');
-      res.status(500).json({ message: 'something went wrong' });
-    }
-  });
-});
 
-// find documents that matches and delete
-app.post('/find-one-update/:user', (req, res) => {
-  User.findOneAndUpdate({name:'username'}, {name: req.params.user} ),(err,result)=>{
-    if(result){
-      res.status(200).json(result);
-      console.log(`Update: ${result}`);
-    }
-  }
-});
 
