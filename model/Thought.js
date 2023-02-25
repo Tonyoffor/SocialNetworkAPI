@@ -41,24 +41,11 @@ const thoughtSchema = new Schema({
 })
 
 
-
-
-
 //I am meant to do something here, not sure what
 
 thoughtSchema.virtual('createdAtFormatted').get(function () {
     return this.createdAt.toLocaleString();
 });
-
-
-
-
-
-// Define a virtual property for the reaction count
-thoughtSchema.virtual('reactionCount').get(function () {
-    return this.reactions.length;
-});
-
 
 
 

@@ -22,8 +22,27 @@ module.exports = {
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
-};
-
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({_id:req.params.thoughtText})
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(500).json(err));
+  },
+  updateThought(req, res){
+    Thought.findOneAndUpdate({_id:req.params.userId},{$set:req.body},{runValidators:true,new:true})
+    .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(500).json(err));
+},
+addReaction(req, res){
+    Thought.findOneAndUpdate({_id:req.params.userId},{$addToSet:{reaction:req.params.reactionBody}},{runValidators:true,new:true})
+    .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteReaction(req, res){
+    Thought.findOneAndUpdate({_id:req.params.userId},{$pull:{reaction:req.params.reactionBody}},{new:true})
+    .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(500).json(err));
+  }
+}
 
   
   
