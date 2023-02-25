@@ -23,7 +23,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   deleteThought(req, res) {
-    Thought.findOneAndDelete({_id:req.params.thoughtText})
+    Thought.findOneAndDelete({_id:req.params.thoughtId})
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
