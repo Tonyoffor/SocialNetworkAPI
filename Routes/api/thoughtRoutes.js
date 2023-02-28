@@ -1,4 +1,7 @@
+//first you require express
 const router = require('express').Router();
+//so in the controllers we have the instructions of that to do and where the find the information to do the specific action
+//here we require/ import the information from the action using the routers from line 16 to 24 below
 const {
   getThought,
   getSingleThought,
@@ -9,10 +12,10 @@ const {
  
 } = require('../../controllers/thoughtController');
 
-// /api/thought
+// /api/thoughts
 router.route('/').get(getThought).post(createThought);
 
-// /api/thought/:thoughtId
+// /api/thoughts/:thoughtId
 router
 .route('/:thoughtId')
 .get(getSingleThought)

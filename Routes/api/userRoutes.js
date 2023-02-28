@@ -1,3 +1,4 @@
+//Same concept as thought routes
 const router = require('express').Router();
 const {
   getUsers,

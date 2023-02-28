@@ -4,11 +4,11 @@ const routes = require('./Routes');
 // Require model
 
 
-//This is the port the system is meant to use to creat the connection
+//This is the port the system is meant to use to creat the connection to the port
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-
+//we are telling the system to use express packages 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
